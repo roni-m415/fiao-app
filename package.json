@@ -1,0 +1,13 @@
+{
+  "name": "fiao-app",
+  "private": true,
+  "version": "2.0.0",
+  "scripts": {
+    "postinstall": "npm install --prefix backend && npm install --prefix frontend",
+    "start": "npm run dev",
+    "dev": "concurrently -n BACKEND,FRONTEND -c blue,green \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}

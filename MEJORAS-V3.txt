@@ -1,0 +1,31 @@
+FIAO APP V3 - MEJORAS VISUALES
+
+Se mantuvo la funcionalidad existente de la Fase 2 y se mejoró la identidad visual.
+
+1. Login rediseñado:
+   - Diseño dividido profesional en escritorio.
+   - Panel de presentación de Fiao con propuesta de valor.
+   - Logo visual con iconografía.
+   - Campos con iconos y estados de foco.
+   - Mostrar/ocultar contraseña.
+   - Botón de acceso con estado de carga.
+   - Mensajes de error más visibles.
+   - Modo demostración integrado de forma discreta.
+   - Diseño responsive para tablet y celular.
+
+2. Nueva paleta elegante:
+   - Azul noche: #0B132B
+   - Azul profundo: #1C2541
+   - Verde turquesa: #2EC4B6
+   - Dorado de acento: #F4B942
+   - Fondos claros y grises suaves.
+   - Ajustes compatibles con modo oscuro.
+
+3. Interfaz general:
+   - Botones principales con degradado y microinteracciones.
+   - Navegación y elementos destacados con turquesa.
+   - Barras de ranking y elementos de dashboard actualizados.
+
+Nota:
+El código fuente queda listo para ejecutar con npm install en frontend y backend.
+En este entorno no fue posible completar npm install/build porque la instalación de dependencias excedió el tiempo disponible; no se modificaron package.json ni las dependencias existentes.

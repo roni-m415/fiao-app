@@ -1,0 +1,76 @@
+FIAO APP v2.0 - Inventario, ventas y fiados
+
+REQUISITOS
+- Node.js 20+ recomendado
+- Windows, Linux o macOS
+
+INSTALACIÓN
+1. Abre PowerShell o CMD en esta carpeta.
+2. Ejecuta: npm install
+   (esto instala automáticamente las dependencias de backend/ y frontend/ también)
+3. Ejecuta: npm run dev   (o npm start)
+4. Abre la URL https que aparecerá en consola (ej: https://localhost:5173). La primera vez
+   el navegador dirá "no es seguro" (es un certificado de prueba para poder usar la cámara):
+   dale clic en "Avanzado" → "Continuar de todos modos".
+
+En Windows también puedes hacer doble clic en INICIAR-FIAO.bat: instala todo automáticamente
+la primera vez y luego enciende backend y frontend juntos.
+(Este proyecto no incluye ese .bat porque algunos antivirus lo marcan como sospechoso solo
+por ejecutar "npm install" automáticamente; si quieres ese acceso directo, créalo tú mismo
+con este contenido y sabrás exactamente qué hace, sin depender de un archivo descargado:
+
+@echo off
+cd /d "%~dp0"
+call npm install
+call npm start
+pause
+)
+
+Si prefieres ejecutar por separado:
+- Backend: cd backend && npm install && npm run dev
+- Frontend: cd frontend && npm install && npm run dev
+
+FUNCIONES PRINCIPALES
+- Dashboard con ventas, fiados, stock bajo y vencimientos.
+- Inventario: crear, editar, eliminar de forma segura, fotos, categorías y códigos de barras.
+- Ajustes de stock con movimientos de entrada/salida.
+- Ventas: efectivo, transferencia y fiado, carrito con cantidades, validación de stock y recibo.
+- Escáner de código de barras con cámara o entrada manual.
+- Fiados: clientes, abonos, historial y recordatorios por WhatsApp.
+- Historial de ventas y devolución completa de una venta.
+- Reportes de ventas, productos más vendidos y ganancia bruta.
+- Configuración de tienda y respaldo JSON completo.
+- Modo oscuro y diseño responsive.
+
+BASE DE DATOS
+- SQLite se crea automáticamente como fiao-app.db dentro de la carpeta desde donde se ejecuta el backend (si tenías datos en tendero-facil.db de una versión anterior, se migran solos la primera vez que arranca).
+- El backend activa WAL y claves foráneas.
+- El endpoint /api/export permite descargar un respaldo completo.
+
+NOTA DE PRODUCCIÓN
+Esta versión es un MVP funcional local. Para desplegarla como SaaS multiusuario se debe añadir autenticación, usuarios/roles, base de datos de servidor, almacenamiento de imágenes y copias automáticas. No se debe exponer SQLite/Express directamente a Internet sin esas capas.
+
+
+V2: incluye módulo Caja y gastos, caja neta estimada, historial de gastos, respaldo con gastos y arranque desde un solo CMD con npm start.
+
+V2.1 (correcciones): se arregló la instalación (antes "npm install" en la raíz no
+instalaba backend/frontend y la app no podía prender); se arregló el CSS del módulo
+Caja (una línea rota impedía que aplicara el diseño); se agregaron los colores de
+borde/fondo que faltaban (afectaban los botones +/- del carrito, el historial de
+ventas y los gastos); ahora la factura sí muestra el nombre, dirección y teléfono
+de la tienda configurados en "Configuración"; y el botón "Imprimir" del historial
+de ventas ya imprime el detalle en vez de una hoja en blanco.
+
+
+FASE 2 - LOGIN, USUARIOS Y MULTI-TIENDA
+- La aplicación ahora inicia con pantalla de autenticación.
+- Usuario demo inicial: admin@fiao.app
+- Contraseña demo: admin123
+- Puedes crear nuevas cuentas desde "Crear una cuenta"; cada cuenta crea su primera tienda.
+- El selector "🏪 Tienda" permite cambiar entre tiendas a las que tiene acceso el usuario.
+- Desde "＋ Tienda" el administrador puede crear otra tienda.
+- "Equipo" permite al administrador agregar usuarios a la tienda con roles Administrador, Encargado o Vendedor y activar/desactivar cuentas.
+- Cada tienda utiliza una base SQLite independiente, evitando mezclar inventario, ventas, fiados, gastos y configuración entre tiendas.
+- La autenticación usa sesiones Bearer en memoria y contraseñas derivadas con scrypt. Para producción se recomienda agregar sesiones persistentes/expiración, recuperación de contraseña, HTTPS real y almacenamiento de secretos mediante variables de entorno.
+- La base de autenticación se guarda como fiao-auth.db y las bases de nuevas tiendas dentro de stores/.
+- Si ya existía fiao-app.db, se conserva como la primera tienda durante la migración.
